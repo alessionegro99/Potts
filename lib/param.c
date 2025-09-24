@@ -221,7 +221,7 @@ void print_parameters_local(Params const *const params, time_t time_start,
 
   fp = fopen(params->d_log_file, "w");
   fprintf(fp, "+------------------------------+\n");
-  fprintf(fp, "| Simulation details for Ising |\n");
+  fprintf(fp, "| Simulation details for Potts |\n");
   fprintf(fp, "+------------------------------+\n\n");
 
   fprintf(fp, "space dimensionality: %d\n\n", DIM);

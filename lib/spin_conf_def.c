@@ -51,8 +51,6 @@ void init_spin_conf(Spin_Conf *SC, Geometry const *const geo, Params *params) {
       params->d_weights[i] =
           1.0 / (exp(-2.0 * params->d_beta * (double)(2 * (i - DIM))) + 1.0);
     }
-  } else if (params->d_updater == 2) {
-    params->d_padd = 1 - exp(-2 * params->d_beta);
   }
 }
 

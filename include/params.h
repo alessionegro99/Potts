@@ -18,7 +18,6 @@ typedef struct Params {
   long d_measevery;
   int d_updater;
   double d_weights[2 * DIM + 1];
-  double d_padd;
   double d_acc;
 
   // initialization & saving

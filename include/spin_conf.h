@@ -31,9 +31,6 @@ void heatbath(Spin_Conf *SC, Geometry const *const geo,
               Params const *const params, long r);
 void update_heatbath(Spin_Conf *SC, Geometry const *const geo,
                      Params const *const params);
-void single_cluster(Spin_Conf *SC, Geometry const *const geo,
-                    Params const *const params, long *cluster, long r);
-void update_single_cluster(Spin_Conf *SC, Geometry const *const geo,
-                           Params const *const params, long *cluster);
+
 
 #endif

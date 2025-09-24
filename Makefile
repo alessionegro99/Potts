@@ -6,11 +6,11 @@ INCLUDES = -Iinclude
 LIB_SOURCES = lib/geometry.c lib/param.c lib/pcg32min.c lib/random.c lib/spin_conf_def.c lib/spin_conf_meas.c lib/spin_conf_upd.c
 LIB_OBJECTS = $(LIB_SOURCES:.c=.o)
 
-SRC_SOURCES = src/Ising.c
+SRC_SOURCES = src/Potts.c
 SRC_OBJECTS = $(SRC_SOURCES:.c=.o)
 
 # Target executable
-TARGET = Ising
+TARGET = Potts
 
 # Default target
 all: $(TARGET)

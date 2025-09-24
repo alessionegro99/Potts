@@ -1,5 +1,5 @@
-#ifndef ISING_C
-#define ISING_C
+#ifndef POTTS_C
+#define POTTS_C
 
 #include "macro.h"
 
@@ -55,8 +55,6 @@ void real_main(char *in_file) {
       update_Metropolis(&SC, &geo, &params);
     } else if (params.d_updater == 1) {
       update_heatbath(&SC, &geo, &params);
-    } else if (params.d_updater == 2) {
-      update_single_cluster(&SC, &geo, &params, cluster);
     }
 
     if (count % params.d_measevery == 0) {
@@ -99,7 +97,7 @@ void print_template_input(void) {
     fprintf(fp, "\n");
     fprintf(fp, "sample    10\n");
     fprintf(fp, "measevery 5\n");
-    fprintf(fp, "updater 2 # 0=Metropolis 1=heat-bath 2=single cluster\n");
+    fprintf(fp, "updater 2 # 0=Metropolis 1=heat-bath\n");
     fprintf(fp, "\n");
     fprintf(fp, "start                   0  # 0=ordered  1=random\n");
     fprintf(fp, "\n");
@@ -120,6 +118,7 @@ int main(int argc, char **argv) {
     printf("Usage: %s input_file\n\n", argv[0]);
 
     printf("Compilation details:\n");
+    printf("\tDIM: %s\n", QUOTEME(DIM));
     printf("\tINT_ALIGN: %s\n", QUOTEME(INT_ALIGN));
 
     print_template_input();
