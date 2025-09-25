@@ -114,14 +114,6 @@ void readinput(char *in_file, Params *params) {
           exit(EXIT_FAILURE);
         }
         params->d_measevery = temp_i;
-      } else if (strncmp(str, "updater", 7) == 0) {
-        err = fscanf(input, "%d", &temp_i);
-        if (err != 1) {
-          fprintf(stderr, "Error in reading the file %s (%s, %d)\n", in_file,
-                  __FILE__, __LINE__);
-          exit(EXIT_FAILURE);
-        }
-        params->d_updater = temp_i;
       }
 
       // initialization & saving
@@ -184,18 +176,6 @@ void readinput(char *in_file, Params *params) {
     }
 
     fclose(input);
-
-    err = 0;
-    if (params->d_updater != 0 && params->d_updater != 1 &&
-        params->d_updater != 2) {
-      err = 1;
-    }
-    if (err == 1) {
-      fprintf(stderr,
-              "Error: 0 for Metropolis, 1 for heat-bath, 2 for single cluster "
-              "(%s, %d)\n",
-              __FILE__, __LINE__);
-    }
   }
 }
 
@@ -224,7 +204,9 @@ void print_parameters_local(Params const *const params, time_t time_start,
   fprintf(fp, "| Simulation details for Potts |\n");
   fprintf(fp, "+------------------------------+\n\n");
 
-  fprintf(fp, "space dimensionality: %d\n\n", DIM);
+  fprintf(fp, "space dimensionality: %d\n", DIM);
+  fprintf(fp, "number of states: %d\n", NSTATES);
+  fprintf(fp, "\n");
 
   fprintf(fp, "lattice: %d", params->d_insize[0]);
   for (i = 1; i < DIM; i++) {
@@ -240,7 +222,6 @@ void print_parameters_local(Params const *const params, time_t time_start,
   fprintf(fp, "\n");
 
   fprintf(fp, "start: %d\n", params->d_start);
-  fprintf(fp, "updater: %d\n", params->d_updater);
   fprintf(fp, "\n");
 
   fprintf(fp, "randseed: %lu\n", params->d_randseed);

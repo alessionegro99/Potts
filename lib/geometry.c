@@ -70,7 +70,7 @@ void init_geometry(Geometry *geo, int insize[DIM]) {
       value = cartcoord[i];
 
       valuep = value + 1;
-      // PBC+
+      // PBC +
       if (valuep >= geo->d_size[i]) {
         valuep -= geo->d_size[i];
       }

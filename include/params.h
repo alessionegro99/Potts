@@ -9,6 +9,7 @@
 typedef struct Params {
   // lattice dimensions
   int d_insize[DIM];
+  double d_instates;
 
   // simulation parameters
   double d_beta;
@@ -16,9 +17,7 @@ typedef struct Params {
   // simulation details
   long d_sample;
   long d_measevery;
-  int d_updater;
-  double d_weights[2 * DIM + 1];
-  double d_acc;
+  double d_aux_prob[2 * DIM + 1];
 
   // initialization & saving
   int d_start;

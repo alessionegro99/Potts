@@ -51,11 +51,7 @@ void real_main(char *in_file) {
   time(&time1);
   for (count = 1; count < params.d_sample + 1; count++) {
     // update
-    if (params.d_updater == 0) {
-      update_Metropolis(&SC, &geo, &params);
-    } else if (params.d_updater == 1) {
-      update_heatbath(&SC, &geo, &params);
-    }
+    update_heatbath(&SC, &geo, &params);
 
     if (count % params.d_measevery == 0) {
       // measure
@@ -93,13 +89,12 @@ void print_template_input(void) {
   } else {
     fprintf(fp, "size 16 16\n");
     fprintf(fp, "\n");
-    fprintf(fp, "beta 0.42\n");
+    fprintf(fp, "beta 1.35\n");
     fprintf(fp, "\n");
     fprintf(fp, "sample    10\n");
     fprintf(fp, "measevery 5\n");
-    fprintf(fp, "updater 2 # 0=Metropolis 1=heat-bath\n");
     fprintf(fp, "\n");
-    fprintf(fp, "start                   0  # 0=ordered  1=random\n");
+    fprintf(fp, "start   0  # 0=ordered  1=random\n");
     fprintf(fp, "\n");
     fprintf(fp, "#output files\n");
     fprintf(fp, "data_file  dati.dat\n");
@@ -119,6 +114,7 @@ int main(int argc, char **argv) {
 
     printf("Compilation details:\n");
     printf("\tDIM: %s\n", QUOTEME(DIM));
+    printf("\tNSTATES: %s\n", QUOTEME(NSTATES));
     printf("\tINT_ALIGN: %s\n", QUOTEME(INT_ALIGN));
 
     print_template_input();

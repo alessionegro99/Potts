@@ -3,18 +3,30 @@
 
 #include "../include/macro.h"
 
+#include <math.h>
+
 #include "../include/spin_conf.h"
 
 // magnetization per site
-double magn(Spin_Conf const *const SC, Geometry const *const geo) {
-  int r, sum;
+double magn(Spin_Conf const *const SC, Geometry const *const geo,
+            Params const *const params) {
+  long r;
+  double tmp1, tmp2, sum1, sum2;
 
-  sum = 0;
+  sum1 = 0.0;
+  sum2 = 0.0;
   for (r = 0; r < geo->d_volume; r++) {
-    sum += SC->lattice[r];
+    tmp1 = cos(SC->lattice[r] * 2.0 * PI * params->d_instates);
+    tmp2 = sin(SC->lattice[r] * 2.0 * PI * params->d_instates);
+
+    sum1 += tmp1;
+    sum2 += tmp2;
   }
 
-  return (double)sum * geo->d_inv_vol;
+  sum1 *= (double)geo->d_inv_vol;
+  sum2 *= (double)geo->d_inv_vol;
+
+  return sqrt(sum1 * sum1 + sum2 * sum2);
 }
 
 // energy per site
@@ -25,7 +37,9 @@ double energy(Spin_Conf const *const SC, Geometry const *const geo) {
   sum = 0;
   for (r = 0; r < geo->d_volume; r++) {
     for (i = 0; i < DIM; i++) {
-      sum += -SC->lattice[r] * SC->lattice[nnp(geo, r, i)];
+      if (SC->lattice[r] == SC->lattice[nnp(geo, r, i)]) {
+        sum--;
+      }
     }
   }
 
@@ -36,14 +50,11 @@ void perform_measures(Spin_Conf const *const SC, Geometry const *const geo,
                       Params const *const params, FILE *datafile) {
   double mag, ener;
 
-  mag = magn(SC, geo);
+  mag = magn(SC, geo, params);
   ener = energy(SC, geo);
 
   fprintf(datafile, "%.12g %.12g", mag, ener);
 
-  if (params->d_updater == 0) {
-    fprintf(datafile, " %.12g", params->d_acc);
-  }
   fprintf(datafile, "\n");
 
   fflush(datafile);

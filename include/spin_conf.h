@@ -17,20 +17,16 @@ void init_spin_conf(Spin_Conf *SC, Geometry const *const geo, Params *params);
 void free_spin_conf(Spin_Conf *SC);
 
 // in spin_conf_meas.c
-double magn(Spin_Conf const *const SC, Geometry const *const geo);
+double magn(Spin_Conf const *const SC, Geometry const *const geo,
+            Params const *const params);
 double energy(Spin_Conf const *const SC, Geometry const *const geo);
 void perform_measures(Spin_Conf const *const SC, Geometry const *const geo,
                       Params const *const params, FILE *datafile);
 
 // in spin_conf_upd.c
-int Metropolis(Spin_Conf *SC, Geometry const *const geo,
-               Params const *const params, long r);
-void update_Metropolis(Spin_Conf *SC, Geometry const *const geo,
-                       Params *params);
 void heatbath(Spin_Conf *SC, Geometry const *const geo,
               Params const *const params, long r);
 void update_heatbath(Spin_Conf *SC, Geometry const *const geo,
                      Params const *const params);
-
 
 #endif

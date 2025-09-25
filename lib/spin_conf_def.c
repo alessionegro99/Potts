@@ -38,19 +38,14 @@ void init_spin_conf(Spin_Conf *SC, Geometry const *const geo, Params *params) {
     }
   }
 
+  // initializing parameters
+  params->d_instates = 1.0 / (double)NSTATES;
+
   int i;
 
-  // initializing weights
-  if (params->d_updater == 0) {
-    for (i = 0; i <= 2 * DIM; i++) {
-      params->d_weights[i] =
-          exp(-2.0 * params->d_beta * ((double)(2 * (i - DIM))));
-    }
-  } else if (params->d_updater == 1) {
-    for (i = 0; i <= 2 * DIM; i++) {
-      params->d_weights[i] =
-          1.0 / (exp(-2.0 * params->d_beta * (double)(2 * (i - DIM))) + 1.0);
-    }
+  // initialize auxilliary vector for acceptance probability
+  for (i = 0; i <= 2 * DIM; i++) {
+    params->d_aux_prob[i] = exp(-params->d_beta * ((double)i));
   }
 }
 
